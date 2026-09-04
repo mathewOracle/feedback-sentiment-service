@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>feedback-sentiment-service</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+  <div class="max-w-2xl mx-auto p-6 space-y-6">
+    <header>
+      <h1 class="text-3xl font-bold">feedback-sentiment-service</h1>
+      <p class="text-slate-500">
+        Type a piece of customer feedback and get an instant sentiment call
+        (positive / negative / neutral) with a confidence score.
+      </p>
+    </header>
+
+    <section class="bg-white rounded-lg shadow p-4">
+      <form hx-post="/analyze" hx-target="#result" hx-swap="innerHTML" class="space-y-3">
+        <label for="text" class="block font-medium text-sm">Feedback text</label>
+        <textarea id="text" name="text" rows="4" required
+          class="w-full border rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="e.g. The delivery was late but support fixed it quickly.">{{ submitted_text }}</textarea>
+        <button type="submit" class="px-4 py-2 rounded bg-indigo-600 text-white text-sm hover:bg-indigo-700">
+          Analyze sentiment
+        </button>
+      </form>
+    </section>
+
+    <div id="result">
+      {% include "partial_result.html" %}
+    </div>
+  </div>
+</body>
+</html>

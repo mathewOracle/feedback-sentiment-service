@@ -1,0 +1,26 @@
+{% if result %}
+<section class="bg-white rounded-lg shadow p-4" aria-live="polite">
+  <h2 class="font-semibold text-lg mb-2">Result</h2>
+  <p class="text-sm mb-2">
+    Predicted sentiment:
+    <span class="font-bold
+      {% if result.label == 'positive' %}text-emerald-600
+      {% elif result.label == 'negative' %}text-red-600
+      {% else %}text-slate-600{% endif %}">
+      {{ result.label }}
+    </span>
+    (confidence {{ (result.confidence * 100) | round(1) }}%)
+  </p>
+  <table class="w-full text-sm">
+    <thead><tr class="text-left border-b"><th>Class</th><th>Score</th></tr></thead>
+    <tbody>
+      {% for label, score in result.scores.items() %}
+      <tr class="border-b last:border-0">
+        <td class="py-1">{{ label }}</td>
+        <td>{{ (score * 100) | round(1) }}%</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
